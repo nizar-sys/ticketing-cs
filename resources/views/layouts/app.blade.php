@@ -1,260 +1,248 @@
-<!--
-=========================================================
-* Argon Dashboard - v1.2.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-
-
-* Copyright  Creative Tim (http://www.creative-tim.com)
-* Coded by www.creative-tim.com
-
-
-
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 @php
-    $userAuth = Auth::user();
+    $user = Auth::user();
 @endphp
-<!DOCTYPE html>
-<html>
 
-<head>
+<!doctype html>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-    <meta name="author" content="Creative Tim">
-    <meta name="csrf-token" content="{{csrf_token()}}" >
-    <title>@yield('title')</title>
-    <!-- Favicon -->
-    <link rel="icon" href="{{ asset('/assets/img/brand/favicon.png') }}" type="image/png">
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-    <!-- Icons -->
-    <link rel="stylesheet" href="{{ asset('/assets/vendor/nucleo/css/nucleo.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}"
-        type="text/css">
-    <!-- Page plugins -->
-    <!-- Argon CSS -->
-    <link rel="stylesheet" href="{{ asset('/assets/css/argon.css?v=1.2.0') }}" type="text/css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <title>{{ config('app.name') }} | @yield('title')</title>
 
-    {{-- toastr --}}
-    {{-- <link rel="stylesheet" href="{{ asset('/assets/css/toastr.css') }}"> --}}
+    <meta name="description" content="{{ config('app.name') }} created by pixelcave and published on Themeforest">
+    <meta name="author" content="pixelcave">
+    <meta name="robots" content="noindex, nofollow">
 
-    {{-- Snackbar --}}
-    <link rel="stylesheet" href="{{ asset('/assets/css//snackbar.min.css') }}">
-    <script src="{{ asset('/assets/js/snackbar.min.js') }}"></script>
-    {{-- <script src="{{ asset('/assets/js/instascan.min.js') }}"></script> --}}
-    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <meta property="og:title" content="{{ config('app.name') }}">
+    <meta property="og:site_name" content="Codebase">
+    <meta property="og:description" content="{{ config('app.name') }} created by pixelcave and published on Themeforest">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
 
-    @yield('c_css')
-</head>
+    <link rel="shortcut icon" href="{{ asset('/') }}/assets/media/favicons/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('/') }}/assets/media/favicons/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/') }}/assets/media/favicons/apple-touch-icon-180x180.png">
 
-<body>
-    <!-- Sidenav -->
-    <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
-        <div class="scrollbar-inner">
-            <!-- Brand -->
-            <div class="sidenav-header d-flex align-items-center justify-content-center">
-                <a class="navbar-brand"
-                    href="{{ route('home') }}">
-                    <img src="{{ asset('/assets/img/brand/blue.png') }}" class="navbar-brand-img" alt="...">
+    <link rel="stylesheet" id="css-main" href="{{ asset('/') }}/assets/css/codebase.min.css">
+    @stack('styles')
+  </head>
+
+  <body>
+    <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed">
+
+      <nav id="sidebar">
+        <div class="sidebar-content">
+          <div class="content-header justify-content-lg-center">
+            <div>
+              <span class="smini-visible fw-bold tracking-wide fs-lg">
+                {!! initialAppName() !!}
+              </span>
+              <a class="link-fx fw-bold tracking-wide mx-auto" href="index.html">
+                <span class="smini-hidden">
+                  <i class="fa fa-fire text-primary"></i>
+                  {!! splitAndWrapAppName() !!}
+                </span>
+              </a>
+            </div>
+
+            <div>
+              <button type="button" class="btn btn-sm btn-alt-danger d-lg-none" data-toggle="layout" data-action="sidebar_close">
+                <i class="fa fa-fw fa-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="js-sidebar-scroll">
+            <div class="content-side content-side-user px-0 py-0">
+              <div class="smini-visible-block animated fadeIn px-2">
+                <img class="img-avatar img-avatar32" src="{{ asset('/') }}/assets/media/avatars/avatar15.jpg" alt="">
+              </div>
+
+              <div class="smini-hidden text-center mx-auto">
+                <a class="img-link" href="be_pages_generic_profile.html">
+                  <img class="img-avatar" src="{{ asset('/') }}/assets/media/avatars/avatar15.jpg" alt="">
                 </a>
-                <div class="pr-3 sidenav-toggler sidenav-toggler-white d-lg-none" data-action="sidenav-pin"
-                    data-target="#sidenav-main">
-                    <div class="sidenav-toggler-inner">
-                        <i class="sidenav-toggler-line"></i>
-                        <i class="sidenav-toggler-line"></i>
-                        <i class="sidenav-toggler-line"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="navbar-inner">
-                <!-- Collapse -->
-                <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-                    <!-- Nav items -->
-                    <ul class="navbar-nav">
-                        @include('_partials.menus')
-                    </ul>
-                    <!-- Divider -->
-                    <hr class="my-3">
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Main content -->
-    <div class="main-content" id="panel">
-        <!-- Topnav -->
-        <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Search form -->
-                    @yield('search')
-                    <!-- Navbar links -->
-                    <ul class="navbar-nav align-items-center  ml-md-auto ">
-                        <li class="nav-item d-xl-none">
-                            <!-- Sidenav toggler -->
-                            <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
-                                data-target="#sidenav-main">
-                                <div class="sidenav-toggler-inner">
-                                    <i class="sidenav-toggler-line"></i>
-                                    <i class="sidenav-toggler-line"></i>
-                                    <i class="sidenav-toggler-line"></i>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item d-sm-none">
-                            <a class="nav-link" href="#" data-action="search-show"
-                                data-target="#navbar-search-main">
-                                <i class="ni ni-zoom-split-in"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <div class="media align-items-center">
-                                    <span class="avatar avatar-sm rounded-circle">
-                                        <img alt="Image placeholder"
-                                            src="{{ asset('/uploads/images/' . $userAuth->avatar) }}">
-                                    </span>
-                                    <div class="media-body  ml-2  d-none d-lg-block">
-                                        <span
-                                            class="mb-0 text-sm  font-weight-bold">{{ $userAuth->name }}</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="dropdown-menu  dropdown-menu-right ">
-                                <div class="dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome!</h6>
-                                </div>
-                                <a href="{{ route('profile') }}" class="dropdown-item">
-                                    <i class="ni ni-single-02"></i>
-                                    <span>My profile</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <form action="{{ route('logout') }}" class="d-none" id="form-logout"
-                                    method="post">
-                                    @csrf
-                                </form>
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); $('#form-logout').submit()" class="dropdown-item">
-                                    <i class="ni ni-user-run"></i>
-                                    <span>Logout</span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- Header -->
-        <!-- Header -->
-        <div class="header bg-primary pb-6">
-            <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
-                            <nav aria-label="breadcrumb" class="d-md-inline-block ml-md-4">
-                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    @yield('breadcrumb')
-
-                                </ol>
-                            </nav>
-                        </div>
-                        <div class="col-lg-6 col-5 text-right">
-                            @yield('action_btn')
-                        </div>
-                    </div>
-                    <!-- Card stats -->
-                    <div class="row" id="widgetsItems">
-                        @yield('widgets')
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Page content -->
-        <div class="container-fluid mt--6" id="parent-content">
-
-            <div id="content">
-                @yield('content')
+                <ul class="list-inline mt-3 mb-0">
+                  <li class="list-inline-item">
+                    <a class="link-fx text-dual fs-sm fw-semibold text-uppercase" href="be_pages_generic_profile.html">{{ $user->name }}</a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="link-fx text-dual" data-toggle="layout" data-action="dark_mode_toggle" href="javascript:void(0)">
+                      <i class="fa fa-burn"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <!-- Footer -->
-            <footer class="footer pt-0">
-                <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6">
-                        <div class="copyright text-center  text-lg-left  text-muted">
-                            &copy; {{ date('Y') }} <a href="https://www.creative-tim.com"
-                                class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <div class="content-side content-side-full">
+              <ul class="nav-main">
+                <li class="nav-main-item">
+                  <a class="nav-main-link active" href="gs_backend.html">
+                    <i class="nav-main-link-icon fa fa-house-user"></i>
+                    <span class="nav-main-link-name">Dashboard</span>
+                  </a>
+                </li>
+                <li class="nav-main-heading">Heading</li>
+                <li class="nav-main-item">
+                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                    <i class="nav-main-link-icon fa fa-puzzle-piece"></i>
+                    <span class="nav-main-link-name">Dropdown</span>
+                  </a>
+                  <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                      <a class="nav-main-link" href="javascript:void(0)">
+                        <span class="nav-main-link-name">Link #1</span>
+                      </a>
+                    </li>
+                    <li class="nav-main-item">
+                      <a class="nav-main-link" href="javascript:void(0)">
+                        <span class="nav-main-link-name">Link #2</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </nav>
+
+      <header id="page-header">
+        <div class="content-header">
+          <div class="space-x-1">
+            <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="layout" data-action="sidebar_toggle">
+              <i class="fa fa-fw fa-bars"></i>
+            </button>
+
+            <div class="dropdown d-inline-block">
+              <button type="button" class="btn btn-sm btn-alt-secondary" id="page-header-themes-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-paint-brush"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-lg p-0" aria-labelledby="page-header-themes-dropdown">
+                <div class="p-3 bg-body-light rounded-top">
+                  <h5 class="h6 text-center mb-0">
+                    Color Themes
+                  </h5>
+                </div>
+                <div class="p-3">
+                  <div class="row g-0 text-center">
+                    <div class="col-2">
+                      <a class="text-default" data-toggle="theme" data-theme="default" href="javascript:void(0)">
+                        <i class="fa fa-2x fa-circle"></i>
+                      </a>
+                    </div>
+                    <div class="col-2">
+                      <a class="text-elegance" data-toggle="theme" data-theme="{{ asset('/') }}/assets/css/themes/elegance.min.css" href="javascript:void(0)">
+                        <i class="fa fa-2x fa-circle"></i>
+                      </a>
+                    </div>
+                    <div class="col-2">
+                      <a class="text-pulse" data-toggle="theme" data-theme="{{ asset('/') }}/assets/css/themes/pulse.min.css" href="javascript:void(0)">
+                        <i class="fa fa-2x fa-circle"></i>
+                      </a>
+                    </div>
+                    <div class="col-2">
+                      <a class="text-flat" data-toggle="theme" data-theme="{{ asset('/') }}/assets/css/themes/flat.min.css" href="javascript:void(0)">
+                        <i class="fa fa-2x fa-circle"></i>
+                      </a>
+                    </div>
+                    <div class="col-2">
+                      <a class="text-corporate" data-toggle="theme" data-theme="{{ asset('/') }}/assets/css/themes/corporate.min.css" href="javascript:void(0)">
+                        <i class="fa fa-2x fa-circle"></i>
+                      </a>
+                    </div>
+                    <div class="col-2">
+                      <a class="text-earth" data-toggle="theme" data-theme="{{ asset('/') }}/assets/css/themes/earth.min.css" href="javascript:void(0)">
+                        <i class="fa fa-2x fa-circle"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-x-1">
+            <div class="dropdown d-inline-block">
+              <button type="button" class="btn btn-sm btn-alt-secondary" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user d-sm-none"></i>
+                <span class="d-none d-sm-inline-block fw-semibold">{{ $user->name }}</span>
+                <i class="fa fa-angle-down opacity-50 ms-1"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
+                <div class="px-2 py-3 bg-body-light rounded-top">
+                  <h5 class="h6 text-center mb-0">
+                    {{ $user->name }}
+                  </h5>
+                </div>
+                <div class="p-2">
+                  <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1" href="be_pages_generic_profile.html">
+                    <span>Profile</span>
+                    <i class="fa fa-fw fa-user opacity-25"></i>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center justify-content-between" href="be_pages_generic_inbox.html">
+                    <span>Inbox</span>
+                    <i class="fa fa-fw fa-envelope-open opacity-25"></i>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1" href="be_pages_generic_invoice.html">
+                    <span>Invoices</span>
+                    <i class="fa fa-fw fa-file opacity-25"></i>
+                  </a>
+                  <div class="dropdown-divider"></div>
+
+                  <a class="dropdown-item d-flex align-items-center justify-content-between space-x-1" href="javascript:void(0)" data-toggle="layout" data-action="side_overlay_toggle">
+                    <span>Settings</span>
+                    <i class="fa fa-fw fa-wrench opacity-25"></i>
+                  </a>
+
+                  <div class="dropdown-divider"></div>
+                  <form action="{{ route('logout') }}" method="post">
+                    @csrf
+
+                    <button class="dropdown-item d-flex align-items-center justify-content-between space-x-1" type="submit">
+                      <span>Sign Out</span>
+                      <i class="fa fa-fw fa-sign-out-alt opacity-25"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="page-header-loader" class="overlay-header bg-primary">
+          <div class="content-header">
+            <div class="w-100 text-center">
+              <i class="far fa-sun fa-spin text-white"></i>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main id="main-container">
+        @yield('content')
+      </main>
+
+      <footer id="page-footer">
+        <div class="content py-3">
+          <div class="row fs-sm">
+            <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
+              Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold" href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
+            </div>
+            <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
+              <a class="fw-semibold" href="https://1.envato.market/95j" style="font-size: 0.4rem!important" target="_blank">{!! splitAndWrapAppName() !!}</a> &copy; <span data-toggle="year-copy"></span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-    <!-- Argon Scripts -->
-    <!-- Core -->
-    <script src="{{ asset('/assets/vendor/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('/assets/vendor/js-cookie/js.cookie.js') }}"></script>
-    <script src="{{ asset('/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
-    <script src="{{ asset('/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
-    <!-- Optional JS -->
-    <script src="{{ asset('/assets/vendor/chart.js/dist/Chart.min.js') }}"></script>
-    <script src="{{ asset('/assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>
-    <!-- Argon JS -->
-    <script src="{{ asset('/assets/js/argon.js?v=1.2.0') }}"></script>
 
-    <!-- toastr -->
-    {{-- <script src="{{ asset('/assets/js/toastr.min.js') }}"></script> --}}
-
-    {{-- sweetalert --}}
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- DataTables  & Plugins -->
-    <script src="{{ asset('/assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('/assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        @if (Session::has('success'))
-            Snackbar.show({
-            text: "{{ session('success') }}",
-            backgroundColor: '#28a745',
-            actionTextColor: '#212529',
-        })
-        @elseif (Session::has('error'))
-            Snackbar.show({
-            text: "{{ session('error') }}",
-            backgroundColor: '#dc3545',
-            actionTextColor: '#212529',
-        })
-        @elseif (Session::has('info'))
-            Snackbar.show({
-            text: "{{ session('info') }}",
-            backgroundColor: '#17a2b8',
-            actionTextColor: '#212529',
-            })
-        @endif;
-    </script>
-
-    @yield('script')
-</body>
-
+    <script src="{{ asset('/') }}/assets/_js/main/app.js"></script>
+    <script src="{{ asset('/') }}/assets/js/codebase.app.min.js"></script>
+    @stack('scripts')
+  </body>
 </html>
