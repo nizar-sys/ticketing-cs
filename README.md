@@ -1,21 +1,9 @@
-Tutorial installasi:
+## Ticketing Application
 
-1. git clone https://github.com/nizar-sys/laravel-basic-template.git
-2. composer install / composer update
-3. npm install 
-4. npm run dev
-5. copy file .env.example dan rename jadi .env
-6. buat database dan konfigurasi di file .env
-7. php artisan migrate:fresh --seed
-8. php artisan key:generate
-9. php artisan serve
+This application aims to facilitate customers in creating tickets for issue resolution in a formal and professional manner. It provides various features to assist customers in reporting issues and monitoring their resolution status. With a user-friendly interface, customers can easily create new tickets, attach additional information, and communicate directly with the support team.
 
-Login untuk admin:
-admin@mail.com
-password
+Additionally, the application offers a ticket tracking feature that allows customers to view their ticket history, including their resolution status and related communication.
 
-Login untuk user:
-user@mail.com
-password
+With this application, it is expected that issue resolution for customers can be carried out more efficiently and transparently.
 
-SELAMAT NGODING!
+Join this application now and enjoy the convenience in resolving your issues!

@@ -9,12 +9,6 @@
     </a>
 </li>
 <li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'users.index' ? 'active' : '' }}" href="{{ route('users.index') }}">
-        <i class="fas fa-users text-warning"></i>
-        <span class="nav-link-text">Users</span>
-    </a>
-</li>
-<li class="nav-item">
     <a class="nav-link {{ $routeActive == 'profile' ? 'active' : '' }}" href="{{ route('profile') }}">
         <i class="fas fa-user-tie text-success"></i>
         <span class="nav-link-text">Profile</span>
