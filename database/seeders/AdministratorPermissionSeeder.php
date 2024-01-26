@@ -17,17 +17,49 @@ class AdministratorPermissionSeeder extends Seeder
     public function run()
     {
         // Create Permission
-        $permission = Permission::firstOrCreate(
-            ['name' => 'administrator'],
-            ['guard_name' => 'web']
-        );
+        $permissions = [
+            [
+                'name' => 'dashboard',
+                'guard_name' => 'web',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'master-data',
+                'guard_name' => 'web',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'master-data.permission-management',
+                'guard_name' => 'web',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'master-data.role-management',
+                'guard_name' => 'web',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'master-data.user-management',
+                'guard_name' => 'web',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate($permission);
+        }
 
         // Create Role and assign Permission
         $role = Role::firstOrCreate(
             ['name' => 'administrator'],
             ['guard_name' => 'web']
         );
-        $role->givePermissionTo($permission);
+        $role->givePermissionTo(Permission::all());
 
         // Create User
         $administrator = \App\Models\User::create([
@@ -39,6 +71,6 @@ class AdministratorPermissionSeeder extends Seeder
 
         // Assign Role to User
         $administrator->assignRole($role);
-        $administrator->givePermissionTo($permission);
+        $administrator->givePermissionTo(Permission::all());
     }
 }

@@ -53,46 +53,77 @@
                     @php
                         switch (true) {
                             case Auth::user()->hasRole('administrator'):
-                                $menus = config('console-menu-admin');
+                                $menus = \App\Models\Menu::forAdministrator();
                                 break;
 
                             default:
                                 $menus = config('console-menu');
                         }
+
+                        $currUrl = explode('/', url()->current());
+
+                        // Function to set 'active' flag based on current URL
+                        function setActiveFlag(&$item, $urlPart, $isChild = false)
+                        {
+                            $item['active'] = count($urlPart) > 3 && '/' . $urlPart[3] == strtolower($item['link']);
+
+                            if ($isChild) {
+                                // Set 'active' flag for child item
+                                $item['active'] = count($urlPart) > 3 && '/' . $urlPart[3] == strtolower($item['link']);
+                            }
+                        }
+
+                        // Set 'active' flag for main menu items
+                        array_walk($menus, function (&$menu) use ($currUrl) {
+                            setActiveFlag($menu, $currUrl);
+
+                            // Set 'active' flag for child menu items
+                            if (!empty($menu['childs'])) {
+                                array_walk($menu['childs'], function (&$child) use ($currUrl) {
+                                    setActiveFlag($child, $currUrl, true);
+                                });
+                            }
+                        });
                     @endphp
 
                     @foreach ($menus as $menu)
-                        @if ($menu['have_heading'])
-                            <li class="nav-main-heading">{{ $menu['heading_label'] }}</li>
-                        @endif
+                        @can($menu['permission'])
+                            @if ($menu['have_heading'])
+                                <li class="nav-main-heading">{{ $menu['heading_label'] }}</li>
+                            @endif
 
-                        @if (!empty($menu['childs']))
-                            <li class="nav-main-item open">
-                                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu"
-                                    aria-haspopup="true" aria-expanded="true" href="{{ $menu['link'] }}">
-                                    <i class="nav-main-link-icon fa fa-grip-vertical"></i>
-                                    <span class="nav-main-link-name">{{ $menu['label'] }}</span>
-                                </a>
-                                <ul class="nav-main-submenu">
-                                    @foreach ($menu['childs'] as $child)
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link" href="{{ $child['link'] }}">
-                                                <span class="nav-main-link-name">{{ $child['label'] }}</span>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @else
-                            <li class="nav-main-item">
-                                <a class="nav-main-link" href="{{ $menu['link'] }}">
-                                    <i class="nav-main-link-icon fa fa-grip-vertical"></i>
-                                    <span class="nav-main-link-name">{{ $menu['label'] }}</span>
-                                </a>
-                            </li>
-                        @endif
+                            @if (!empty($menu['childs']))
+                                <li class="nav-main-item {{ $menu['active'] ? 'open' : '' }}">
+                                    <a class="nav-main-link {{ $menu['active'] ? 'active' : '' }} nav-main-link-submenu"
+                                        data-toggle="submenu" aria-haspopup="true" aria-expanded="true"
+                                        href="{{ $menu['link'] }}">
+                                        <i class="nav-main-link-icon fa fa-grip-vertical"></i>
+                                        <span class="nav-main-link-name">{{ $menu['label'] }}</span>
+                                    </a>
+                                    <ul class="nav-main-submenu">
+                                        @foreach ($menu['childs'] as $child)
+                                            @can($child['permission'])
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ $child['active'] ? 'active' : '' }}"
+                                                        href="{{ $child['link'] }}">
+                                                        <span class="nav-main-link-name">{{ $child['label'] }}</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @else
+                                <li class="nav-main-item">
+                                    <a class="nav-main-link {{ $menu['active'] ? 'active' : '' }}"
+                                        href="{{ $menu['link'] }}">
+                                        <i class="nav-main-link-icon fa fa-grip-vertical"></i>
+                                        <span class="nav-main-link-name">{{ $menu['label'] }}</span>
+                                    </a>
+                                </li>
+                            @endif
+                        @endcan
                     @endforeach
-
                 </ul>
             </div>
         </div>
