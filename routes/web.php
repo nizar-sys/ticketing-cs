@@ -34,4 +34,8 @@ Route::middleware('auth')->group(function() {
         Route::put('/change-ava', [ProfileController::class, 'changeFotoProfile'])->name('change-ava');
         Route::put('/change-profile', [ProfileController::class, 'changeProfile'])->name('change-profile');
     }); # profile group
+
+    Route::prefix('master-data')->group(function(){
+        Route::get('/permission', [RouteController::class, 'dashboard'])->name('master-data.permission');
+    });
 });

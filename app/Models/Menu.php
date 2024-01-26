@@ -30,8 +30,10 @@ class Menu extends Model
             ->whereIn('permission', $allowedPermissions)
             ->whereNull('parent_id')
             ->with(['childs' => function ($query) use ($allowedPermissions) {
-                $query->whereIn('permission', $allowedPermissions);
+                $query->whereIn('permission', $allowedPermissions)
+                    ->orderBy('order');
             }])
+            ->orderBy('order')
             ->get()
             ->map(function ($menu) {
                 $menuData = [

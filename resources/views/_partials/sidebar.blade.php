@@ -60,16 +60,16 @@
                                 $menus = config('console-menu');
                         }
 
-                        $currUrl = explode('/', url()->current());
+                        $currUrl = '/' . strtolower(request()->path());
 
                         // Function to set 'active' flag based on current URL
                         function setActiveFlag(&$item, $urlPart, $isChild = false)
                         {
-                            $item['active'] = count($urlPart) > 3 && '/' . $urlPart[3] == strtolower($item['link']);
+                            $item['active'] = $urlPart == strtolower($item['link']);
 
                             if ($isChild) {
                                 // Set 'active' flag for child item
-                                $item['active'] = count($urlPart) > 3 && '/' . $urlPart[3] == strtolower($item['link']);
+                                $item['active'] = $urlPart == strtolower($item['link']);
                             }
                         }
 
@@ -77,11 +77,11 @@
                         array_walk($menus, function (&$menu) use ($currUrl) {
                             setActiveFlag($menu, $currUrl);
 
-                            // Set 'active' flag for child menu items
                             if (!empty($menu['childs'])) {
                                 array_walk($menu['childs'], function (&$child) use ($currUrl) {
                                     setActiveFlag($child, $currUrl, true);
                                 });
+                                $menu['hasActiveChild'] = collect($menu['childs'])->contains('active', true);
                             }
                         });
                     @endphp
@@ -93,7 +93,7 @@
                             @endif
 
                             @if (!empty($menu['childs']))
-                                <li class="nav-main-item {{ $menu['active'] ? 'open' : '' }}">
+                                <li class="nav-main-item {{ $menu['hasActiveChild'] ? 'open' : '' }}">
                                     <a class="nav-main-link {{ $menu['active'] ? 'active' : '' }} nav-main-link-submenu"
                                         data-toggle="submenu" aria-haspopup="true" aria-expanded="true"
                                         href="{{ $menu['link'] }}">

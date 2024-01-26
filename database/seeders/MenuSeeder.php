@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Menu;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -40,7 +41,7 @@ class MenuSeeder extends Seeder
                 'order' => 1,
                 'label' => 'Permission',
                 'heading_label' => null,
-                'link' => '/master/permission',
+                'link' => '/master-data/permission',
                 'permission' => 'master-data.permission-management',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -50,7 +51,7 @@ class MenuSeeder extends Seeder
                 'order' => 2,
                 'label' => 'Role',
                 'heading_label' => null,
-                'link' => '/master/role',
+                'link' => '/master-data/role',
                 'permission' => 'master-data.role-management',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -60,15 +61,13 @@ class MenuSeeder extends Seeder
                 'order' => 3,
                 'label' => 'User',
                 'heading_label' => null,
-                'link' => '/master/user',
+                'link' => '/master-data/user',
                 'permission' => 'master-data.user-management',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ];
 
-        foreach ($menus as $menu) {
-            \App\Models\Menu::firstOrCreate($menu);
-        }
+        Menu::insert($menus);
     }
 }

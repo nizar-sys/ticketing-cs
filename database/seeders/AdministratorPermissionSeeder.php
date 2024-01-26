@@ -59,7 +59,6 @@ class AdministratorPermissionSeeder extends Seeder
             ['name' => 'administrator'],
             ['guard_name' => 'web']
         );
-        $role->givePermissionTo(Permission::all());
 
         // Create User
         $administrator = \App\Models\User::create([
@@ -71,6 +70,11 @@ class AdministratorPermissionSeeder extends Seeder
 
         // Assign Role to User
         $administrator->assignRole($role);
-        $administrator->givePermissionTo(Permission::all());
+
+        // Give Permissions to User
+        foreach (Permission::all() as $permission) {
+            $administrator->givePermissionTo($permission);
+            $role->givePermissionTo($permission);
+        }
     }
 }
