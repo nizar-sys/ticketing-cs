@@ -2,87 +2,109 @@
 @section('title', 'Login')
 
 @section('content')
-    <!-- Main content -->
-    <div class="main-content">
-        <!-- Header -->
-        <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
-            <div class="container">
-                <div class="header-body text-center mb-7">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                            <h1 class="text-white">Welcome!</h1>
-                            <p class="text-lead text-white">Use these awesome forms to login or create new account for free.
-                            </p>
-                        </div>
+    <div class="bg-body-dark">
+        <div class="row mx-0 justify-content-center">
+            <div class="hero-static col-lg-6 col-xl-4">
+                <div class="content content-full overflow-hidden">
+
+                    <div class="py-4 text-center">
+                        <a class="link-fx fw-bold" href="{{ url('/') }}">
+                            <i class="fa fa-fire"></i>
+                            {!! splitAndWrapAppName() !!}
+                        </a>
+                        <h1 class="h3 fw-bold mt-4 mb-2">Welcome to Your Dashboard</h1>
+                        <h2 class="h5 fw-medium text-muted mb-0">It's a great day today!</h2>
                     </div>
-                </div>
-            </div>
-            <div class="separator separator-bottom separator-skew zindex-100">
-                <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-                </svg>
-            </div>
-        </div>
-        <!-- Page content -->
-        <div class="container mt--8 pb-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-5 col-md-7">
-                    <div class="card bg-secondary border-0 mb-0">
-                        <div class="card-body px-lg-5 py-lg-5">
-                            <div class="text-center text-muted mb-4">
-                                <small>Sign in with credentials</small>
+
+                    <form class="js-validation-signin" action="{{ route('login.store') }}" method="POST">
+                        @csrf
+
+                        <div class="block block-themed block-rounded block-fx-shadow">
+                            <div class="block-header bg-gd-dusk">
+                                <h3 class="block-title">Please Sign In</h3>
                             </div>
-                            <form role="form" action="{{ route('login.store') }}" method="POST">
-                                @csrf
-
-                                <div class="form-group mb-3">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                        </div>
-                                        <input class="form-control" name="email" placeholder="Email" type="email"
-                                            value="{{ old('email') }}">
-                                    </div>
+                            <div class="block-content">
+                                <div class="form-floating mb-4">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        value="{{ old('email') }}" required autocomplete="email" autofocus
+                                        placeholder="Enter your email" id="login-email" name="email">
+                                    <label class="form-label" for="login-email">Email</label>
                                     @error('email')
-                                        <div class="invalid-feedback d-block">*{{ $message }} <i
-                                                class="fas fa-arrow-up"></i></div>
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                        </div>
-                                        <input class="form-control" name="password" placeholder="Password" type="password"
-                                            value="{{ old('password') }}" id="password">
-                                        <div class="input-group-prepend">
-                                            <button type="button" onclick="seePassword(this)" class="input-group-text"
-                                                id="seePass"><i class="fas fa-eye"></i></button>
+                                <div class="form-floating mb-4">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        required autocomplete="current-password" placeholder="Enter your password"
+                                        id="login-password" name="password">
+                                    <label class="form-label" for="login-password">Password</label>
+                                    @error('password')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 d-sm-flex align-items-center push">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="login-remember-me" name="remember_me">
+                                            <label class="form-check-label" for="login-remember-me">Remember
+                                                Me</label>
                                         </div>
                                     </div>
-                                    @error('password')
-                                        <div class="invalid-feedback d-block">*{{ $message }} <i
-                                                class="fas fa-arrow-up"></i></div>
-                                    @enderror
+                                    <div class="col-sm-6 text-sm-end push">
+                                        <button type="submit" class="btn btn-lg btn-alt-primary fw-medium">
+                                            Sign In
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <div class="custom-control custom-control-alternative custom-checkbox">
-                                    <input class="custom-control-input" name="remember" id="customCheckLogin"
-                                        type="checkbox">
-                                    <label class="custom-control-label" for="customCheckLogin">
-                                        <span class="text-muted">Remember me</span>
-                                    </label>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary my-4">Sign in</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div
+                                class="block-content block-content-full bg-body-light text-center d-flex justify-content-between">
+                                <a class="fs-sm fw-medium link-fx text-muted me-2 mb-1 d-inline-block"
+                                    href="">
+                                    Forgot Password
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        class Validation {
+            static initSignIn() {
+                Codebase.helpers("jq-validation");
+                $(".js-validation-signin").validate({
+                    rules: {
+                        "email": {
+                            required: true,
+                            minlength: 3,
+                            email: true
+                        },
+                        "password": {
+                            required: true,
+                            minlength: 5
+                        },
+                    },
+                    messages: {
+                        "email": {
+                            required: "Please enter an email",
+                            minlength: "Your email must consist of at least 3 characters",
+                            email: "Please enter a valid email address"
+                        },
+                        "password": {
+                            required: "Please provide a password",
+                            minlength: "Your password must be at least 5 characters long",
+                        },
+                    },
+                });
+            }
+        }
+
+        Codebase.onLoad(() => Validation.initSignIn());
+    </script>
+@endpush
