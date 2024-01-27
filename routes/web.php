@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PermissionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DataTableController;
@@ -36,6 +37,6 @@ Route::middleware('auth')->group(function() {
     }); # profile group
 
     Route::prefix('master-data')->group(function(){
-        Route::get('/permission', [RouteController::class, 'dashboard'])->name('master-data.permission');
+        Route::resource('permission', PermissionController::class);
     });
 });

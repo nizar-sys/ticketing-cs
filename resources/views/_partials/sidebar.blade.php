@@ -59,31 +59,6 @@
                             default:
                                 $menus = config('console-menu');
                         }
-
-                        $currUrl = '/' . strtolower(request()->path());
-
-                        // Function to set 'active' flag based on current URL
-                        function setActiveFlag(&$item, $urlPart, $isChild = false)
-                        {
-                            $item['active'] = $urlPart == strtolower($item['link']);
-
-                            if ($isChild) {
-                                // Set 'active' flag for child item
-                                $item['active'] = $urlPart == strtolower($item['link']);
-                            }
-                        }
-
-                        // Set 'active' flag for main menu items
-                        array_walk($menus, function (&$menu) use ($currUrl) {
-                            setActiveFlag($menu, $currUrl);
-
-                            if (!empty($menu['childs'])) {
-                                array_walk($menu['childs'], function (&$child) use ($currUrl) {
-                                    setActiveFlag($child, $currUrl, true);
-                                });
-                                $menu['hasActiveChild'] = collect($menu['childs'])->contains('active', true);
-                            }
-                        });
                     @endphp
 
                     @foreach ($menus as $menu)

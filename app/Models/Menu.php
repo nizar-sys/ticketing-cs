@@ -60,6 +60,33 @@ class Menu extends Model
                 return $menuData;
             })->toArray();
 
+        return $this->formattedMenu($menus);
+    }
+
+    protected function formattedMenu($menus)
+    {
+        $currUrl = '/' . strtolower(request()->path());
+
+        function setActiveFlag(&$item, $urlPart, $isChild = false)
+        {
+            $item['active'] = $urlPart == strtolower($item['link']);
+
+            if ($isChild) {
+                $item['active'] = $urlPart == strtolower($item['link']);
+            }
+        }
+
+        array_walk($menus, function (&$menu) use ($currUrl) {
+            setActiveFlag($menu, $currUrl);
+
+            if (!empty($menu['childs'])) {
+                array_walk($menu['childs'], function (&$child) use ($currUrl) {
+                    setActiveFlag($child, $currUrl, true);
+                });
+                $menu['hasActiveChild'] = collect($menu['childs'])->contains('active', true);
+            }
+        });
+
         return $menus;
     }
 }
