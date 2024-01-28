@@ -36,7 +36,8 @@ function deletePermission(url) {
 $(document).ready(function () {
     permissionTable = $("#permissions-table").DataTable();
 
-    $(document).on('click', '.delete-permission', () => {
-        deletePermission($(this).data('url'));
+    $(document).on('click', '.delete-permission', function() {
+        var url = $(this).data('url') || $(this).parent().data('url');
+        deletePermission(url);
     });
 });

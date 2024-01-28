@@ -62,6 +62,7 @@
     <script src="{{ asset('/') }}/assets/js/plugins/datatables-buttons/buttons.html5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('/') }}/assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="{{ asset('/') }}/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script>
         Codebase.helpersOnLoad(['jq-notify']);
 

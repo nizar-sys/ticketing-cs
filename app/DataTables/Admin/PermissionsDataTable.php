@@ -61,7 +61,12 @@ class PermissionsDataTable extends DataTable
                     ->minifiedAjax()
                     ->orderBy(1)
                     ->selectStyleSingle()
-                    ->autoWidth(false);
+                    ->autoWidth(false)
+                    ->dom("<'row'<'col-md-6'B><'col-md-6'f>l>rtip")
+                    ->buttons(
+                        Button::make('csv')
+                    );
+
     }
 
     /**
@@ -83,7 +88,8 @@ class PermissionsDataTable extends DataTable
             Column::make('last_updated')
                 ->title('Last Updated')
                 ->addClass('text-center')
-                ->searchable(false),
+                ->searchable(false)
+                ->orderable(false),
             Column::make('action')
                 ->title('Action')
                 ->addClass('text-center')

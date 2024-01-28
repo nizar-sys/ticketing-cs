@@ -3,9 +3,9 @@
         <i class="fas fa-edit"></i>
     </a>
 
+    @if (in_array($permission->permission, ['dashboard', 'master-data.']))
     <button data-url="{{ $url_destroy }}" class="btn btn-sm btn-danger delete-permission" data-bs-toggle="tooltip" title="Delete">
         <i class="fas fa-trash"></i>
     </button>
-    @if (in_array($permission->permission, ['dashboard', 'master-data.']))
     @endif
 </div>

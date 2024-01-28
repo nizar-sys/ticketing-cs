@@ -72,7 +72,12 @@ class Menu extends Model
             $item['active'] = $urlPart == strtolower($item['link']);
 
             if ($isChild) {
-                $item['active'] = $urlPart == strtolower($item['link']);
+                $itemLink = strtolower($item['link']);
+
+                $item['active'] = $urlPart == $itemLink || (
+                    preg_match('/^\/master-data\/([^\/]+)/', $urlPart, $matches) &&
+                    str_contains(strtolower($item['permission'] ?? ''), strtolower($matches[1]))
+                );
             }
         }
 

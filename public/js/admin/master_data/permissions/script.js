@@ -39,11 +39,10 @@ function deletePermission(url) {
 }
 
 $(document).ready(function () {
-  var _this = this;
-
   permissionTable = $("#permissions-table").DataTable();
   $(document).on('click', '.delete-permission', function () {
-    deletePermission($(_this).data('url'));
+    var url = $(this).data('url') || $(this).parent().data('url');
+    deletePermission(url);
   });
 });
 /******/ })()
