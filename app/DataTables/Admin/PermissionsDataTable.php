@@ -24,7 +24,7 @@ class PermissionsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->addColumn('last_updated', function(Permission $permission){
+            ->editColumn('updated_at', function(Permission $permission){
                 return $permission->updated_at->format('d M Y H:i:s');
             })
             ->addColumn('action', function(Permission $permission){
@@ -64,7 +64,7 @@ class PermissionsDataTable extends DataTable
                     ->autoWidth(false)
                     ->dom("<'row'<'col-md-6'B><'col-md-6'f>l>rtip")
                     ->buttons(
-                        Button::make('csv')
+                        Button::make('excel')
                     );
 
     }
@@ -85,11 +85,10 @@ class PermissionsDataTable extends DataTable
                 ->orderable(false),
             Column::make('name')
                 ->title('Permission Name'),
-            Column::make('last_updated')
+            Column::make('updated_at')
                 ->title('Last Updated')
                 ->addClass('text-center')
-                ->searchable(false)
-                ->orderable(false),
+                ->searchable(false),
             Column::make('action')
                 ->title('Action')
                 ->addClass('text-center')

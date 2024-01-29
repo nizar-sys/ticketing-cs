@@ -32,6 +32,13 @@ class PermissionController extends Controller
         return view('admin.master_data.permissions.edit', compact('permission'));
     }
 
+    public function update(RequestPermission $request, Permission $permission)
+    {
+        $permission->update($request->validated());
+
+        return redirect()->route('permission.index')->with('success', 'Permission updated successfully!');
+    }
+
     public function destroy(Permission $permission)
     {
         $permission->delete();

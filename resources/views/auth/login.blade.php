@@ -16,7 +16,7 @@
                         <h2 class="h5 fw-medium text-muted mb-0">It's a great day today!</h2>
                     </div>
 
-                    <form class="js-validation-signin" action="{{ route('login.store') }}" method="POST">
+                    <form class="form-signin" action="{{ route('login.store') }}" method="POST">
                         @csrf
 
                         <div class="block block-themed block-rounded block-fx-shadow">
@@ -74,37 +74,5 @@
 @endsection
 
 @push('scripts')
-    <script>
-        class Validation {
-            static initSignIn() {
-                Codebase.helpers("jq-validation");
-                $(".js-validation-signin").validate({
-                    rules: {
-                        "email": {
-                            required: true,
-                            minlength: 3,
-                            email: true
-                        },
-                        "password": {
-                            required: true,
-                            minlength: 5
-                        },
-                    },
-                    messages: {
-                        "email": {
-                            required: "Please enter an email",
-                            minlength: "Your email must consist of at least 3 characters",
-                            email: "Please enter a valid email address"
-                        },
-                        "password": {
-                            required: "Please provide a password",
-                            minlength: "Your password must be at least 5 characters long",
-                        },
-                    },
-                });
-            }
-        }
-
-        Codebase.onLoad(() => Validation.initSignIn());
-    </script>
+    <script src="{{ url('/js/global/auth/script.js') }}"></script>
 @endpush

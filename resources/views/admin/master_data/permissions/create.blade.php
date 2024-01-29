@@ -24,7 +24,7 @@
             <div class="block-content block-content-full">
                 <div class="row">
                     <div class="col-lg-8 col-xl-5 mx-auto">
-                        <form class="mb-5 create-permission" action="{{ route('permission.store') }}" method="POST">
+                        <form class="mb-5 form-permission" action="{{ route('permission.store') }}" method="POST">
                             @csrf
 
                             <div class="mb-4">
@@ -32,7 +32,7 @@
                                 <input type="name" class="form-control @error('name')
                                     is-invalid
                                 @enderror" id="name" name="name"
-                                    placeholder="Input Permission Name">
+                                    placeholder="Input Permission Name" value="{{ old('name') }}">
                                 @error('name')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
@@ -49,27 +49,5 @@
 @endsection
 
 @push('scripts')
-    <script>
-        class Validation {
-            static initSignIn() {
-                Codebase.helpers("jq-validation");
-                $(".create-permission").validate({
-                    rules: {
-                        "name": {
-                            required: true,
-                            minlength: 3,
-                        },
-                    },
-                    messages: {
-                        "name": {
-                            required: "Please enter an permission name",
-                            minlength: "Permission name must consist of at least 3 characters",
-                        },
-                    },
-                });
-            }
-        }
-
-        Codebase.onLoad(() => Validation.initSignIn());
-    </script>
+    <script src="{{ url('/js/admin/master_data/permissions/validation_form_permssion_script.js', []) }}"></script>
 @endpush

@@ -16,6 +16,14 @@ mix.js("resources/js/app.js", "public/js")
         "resources/js/admin/master_data/permissions/script.js",
         "public/js/admin/master_data/permissions/script.js"
     )
+    .js(
+        "resources/js/admin/master_data/permissions/validation_form_permssion_script.js",
+        "public/js/admin/master_data/permissions/validation_form_permssion_script.js"
+    )
+    .js(
+        "resources/js/global/auth/script.js",
+        "public/js/global/auth/script.js"
+    )
     .postCss("resources/css/app.css", "public/css", [
         require("postcss-import"),
         require("tailwindcss"),

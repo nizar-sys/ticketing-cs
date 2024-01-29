@@ -1,5 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/admin/master_data/permissions/script.js": "/js/admin/master_data/permissions/script.js",
+    "/js/admin/master_data/permissions/validation_form_permssion_script.js": "/js/admin/master_data/permissions/validation_form_permssion_script.js",
+    "/js/global/auth/script.js": "/js/global/auth/script.js",
     "/css/app.css": "/css/app.css"
 }

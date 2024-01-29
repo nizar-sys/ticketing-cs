@@ -93,6 +93,15 @@
             });
         }
     </script>
+    <script>
+        @if (Session::has('success'))
+            notify('success', "{{ session('success') }}")
+        @elseif (Session::has('info'))
+            notify('info', "{{ session('info') }}")
+        @elseif (Session::has('error'))
+            notify('error', "{{ session('error') }}")
+        @endif
+    </script>
 
     @stack('scripts')
   </body>
